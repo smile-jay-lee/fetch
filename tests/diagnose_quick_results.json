@@ -1,0 +1,319 @@
+{
+  "timestamp": "2026-03-19T16:00:16.739078",
+  "tests": [
+    {
+      "name": "单线程",
+      "workers": 1,
+      "elapsed": 41.783740282058716,
+      "results": [
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=FD4197AA490DD8F5038521420BB8EAB6",
+          "status": 200,
+          "error": null,
+          "response_time": 0.9740087985992432
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8C48B831398D23B5918370480EA8D4BA",
+          "status": 200,
+          "error": null,
+          "response_time": 0.21572422981262207
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=675B2043A0DFB753BDF547E458339344",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2356278896331787
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=DF51CD0BE23B25E32BA2950DBBDDD880",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2561361789703369
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=1072281B426B197ADEB3FD92507566CD",
+          "status": 200,
+          "error": null,
+          "response_time": 0.23044657707214355
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=35651BC9CFA4506EB75F140E59A4F73D",
+          "status": null,
+          "error": "Timeout",
+          "response_time": 17.86319661140442
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=9E0FE62BC37FAFDAB7F272954C62D11D",
+          "status": 200,
+          "error": null,
+          "response_time": 5.162701606750488
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=73BCF62423CC262188BE74ECDC1953E0",
+          "status": 200,
+          "error": null,
+          "response_time": 3.6621975898742676
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B608E58BF8B8264BFF22C1E83ED27AD",
+          "status": 200,
+          "error": null,
+          "response_time": 0.22043418884277344
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=D33F9B8840108B962DF9606982DB49AF",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2250347137451172
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=DD7BC47788E5B60659A1FB271F8CC7F7",
+          "status": 200,
+          "error": null,
+          "response_time": 3.9816219806671143
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=AEA9B964F26E6A87913C3BD66564A137",
+          "status": 200,
+          "error": null,
+          "response_time": 0.20648956298828125
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=1139FF4215E8BDC230A367DDD225D571",
+          "status": 200,
+          "error": null,
+          "response_time": 0.224365234375
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=29B6EF45D31CF448E35F47DB577EF735",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2729368209838867
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=07FD0444504DFA66B66B6B126EF3B53A",
+          "status": 200,
+          "error": null,
+          "response_time": 0.23362493515014648
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=B7A8162F756CD435B2ACD49094A7866C",
+          "status": 200,
+          "error": null,
+          "response_time": 3.807213544845581
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=FE6AD55E88B2E6936FB194D607000CF9",
+          "status": 200,
+          "error": null,
+          "response_time": 0.24571537971496582
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=CAF753E55DCF9CD17580BEE8639F0451",
+          "status": 200,
+          "error": null,
+          "response_time": 0.24199914932250977
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=6D3EA62FD9B477B89F2B2309ED8B3AAC",
+          "status": 200,
+          "error": null,
+          "response_time": 0.22799086570739746
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=D6709E3AC9BAB3D59F69CA24D23145B9",
+          "status": 200,
+          "error": null,
+          "response_time": 0.21238136291503906
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=6351ADF245AEC20A03974045980852DB",
+          "status": 200,
+          "error": null,
+          "response_time": 0.253267765045166
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=4894124A376928D8A5082E3FBFC9DA20",
+          "status": 200,
+          "error": null,
+          "response_time": 0.9722080230712891
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=14AF9462CFD1628625B83196F736C0DF",
+          "status": 200,
+          "error": null,
+          "response_time": 0.8757352828979492
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=61ED3E61C0D715883E09CCBA5205E741",
+          "status": 200,
+          "error": null,
+          "response_time": 0.7756824493408203
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=464A8CBDF52BFF50C3D55131D93CD0DA",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2022228240966797
+        }
+      ]
+    },
+    {
+      "name": "多线程(10)",
+      "workers": 10,
+      "elapsed": 1.453026294708252,
+      "results": [
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=FD4197AA490DD8F5038521420BB8EAB6",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2198317050933838
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=8C48B831398D23B5918370480EA8D4BA",
+          "status": 200,
+          "error": null,
+          "response_time": 0.21628522872924805
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=675B2043A0DFB753BDF547E458339344",
+          "status": 200,
+          "error": null,
+          "response_time": 0.22372150421142578
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=DF51CD0BE23B25E32BA2950DBBDDD880",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2424163818359375
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=1072281B426B197ADEB3FD92507566CD",
+          "status": 200,
+          "error": null,
+          "response_time": 0.23616600036621094
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=35651BC9CFA4506EB75F140E59A4F73D",
+          "status": 200,
+          "error": null,
+          "response_time": 1.03023099899292
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=9E0FE62BC37FAFDAB7F272954C62D11D",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2470242977142334
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=73BCF62423CC262188BE74ECDC1953E0",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2248992919921875
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=7B608E58BF8B8264BFF22C1E83ED27AD",
+          "status": 200,
+          "error": null,
+          "response_time": 1.0377819538116455
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=D33F9B8840108B962DF9606982DB49AF",
+          "status": 200,
+          "error": null,
+          "response_time": 0.22492289543151855
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=DD7BC47788E5B60659A1FB271F8CC7F7",
+          "status": 200,
+          "error": null,
+          "response_time": 0.25246715545654297
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=AEA9B964F26E6A87913C3BD66564A137",
+          "status": 200,
+          "error": null,
+          "response_time": 0.973548412322998
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=1139FF4215E8BDC230A367DDD225D571",
+          "status": 200,
+          "error": null,
+          "response_time": 0.23341059684753418
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=29B6EF45D31CF448E35F47DB577EF735",
+          "status": 200,
+          "error": null,
+          "response_time": 0.28693175315856934
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=07FD0444504DFA66B66B6B126EF3B53A",
+          "status": 200,
+          "error": null,
+          "response_time": 0.23072433471679688
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=B7A8162F756CD435B2ACD49094A7866C",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2852473258972168
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=FE6AD55E88B2E6936FB194D607000CF9",
+          "status": 200,
+          "error": null,
+          "response_time": 0.21567797660827637
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=CAF753E55DCF9CD17580BEE8639F0451",
+          "status": 200,
+          "error": null,
+          "response_time": 0.9974091053009033
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=6D3EA62FD9B477B89F2B2309ED8B3AAC",
+          "status": 200,
+          "error": null,
+          "response_time": 0.9921045303344727
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=D6709E3AC9BAB3D59F69CA24D23145B9",
+          "status": 200,
+          "error": null,
+          "response_time": 0.21279215812683105
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=6351ADF245AEC20A03974045980852DB",
+          "status": 200,
+          "error": null,
+          "response_time": 0.3174622058868408
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=4894124A376928D8A5082E3FBFC9DA20",
+          "status": 200,
+          "error": null,
+          "response_time": 0.2594935894012451
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=14AF9462CFD1628625B83196F736C0DF",
+          "status": 200,
+          "error": null,
+          "response_time": 0.20400142669677734
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=61ED3E61C0D715883E09CCBA5205E741",
+          "status": 200,
+          "error": null,
+          "response_time": 0.22238659858703613
+        },
+        {
+          "url": "https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=464A8CBDF52BFF50C3D55131D93CD0DA",
+          "status": 200,
+          "error": null,
+          "response_time": 0.22324824333190918
+        }
+      ]
+    }
+  ]
+}

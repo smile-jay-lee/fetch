@@ -1,4 +1,5 @@
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import hashlib
 import html
 import re
@@ -267,6 +268,19 @@ def resolve_caibiao_column_index(ws: object, column_spec: str) -> int:
 	return column_index_from_string(column_spec.upper())
 
 
+def resolve_output_column_index(ws: object, column_spec: str, header_name: str | None) -> int:
+	if column_spec.upper() != "AUTO":
+		return resolve_caibiao_column_index(ws, column_spec)
+
+	if header_name:
+		for col in range(1, ws.max_column + 1):
+			v = ws.cell(row=1, column=col).value
+			if v is not None and str(v).strip() == header_name:
+				return col
+
+	return ws.max_column + 1
+
+
 def n_column_hint_has_caibiao(value: object) -> bool:
 	if value is None:
 		return False
@@ -314,11 +328,131 @@ def extract_hcnos_for_review(url: str, html_content: str) -> list[str]:
 	return []
 
 
+def process_row_task(
+	row: int,
+	url: str,
+	output_dir: Path,
+	review_dir: Path,
+	timeout: int,
+	fetch_review: bool,
+	extract_caibiao: bool,
+) -> dict[str, object]:
+	result: dict[str, object] = {
+		"row": row,
+		"url": url,
+		"ok": False,
+		"error": "",
+		"final_url": url,
+		"saved_name": "",
+		"predicted_has_caibiao": False,
+		"has_module": False,
+		"caibiao_text": "",
+		"caibiao_from_review": False,
+		"review_found": 0,
+		"review_success": 0,
+		"review_failed": 0,
+		"review_fail_msgs": [],
+	}
+
+	filename = build_filename(url, row)
+	target = output_dir / filename
+
+	try:
+		content, final_url = fetch_url_content_resilient(url, timeout=timeout)
+		target.write_text(content, encoding="utf-8")
+
+		result["ok"] = True
+		result["final_url"] = final_url
+		result["saved_name"] = target.name
+
+		hcnos = extract_feedback_ids(content)
+		result["review_found"] = len(hcnos)
+
+		review_cache: dict[str, tuple[str, str]] = {}
+		review_saved_hcnos: set[str] = set()
+
+		def fetch_review_by_hcno(hcno: str, resilient: bool) -> tuple[str, str, str]:
+			if hcno in review_cache:
+				rc, rf = review_cache[hcno]
+				ru = build_review_url(url, hcno)
+				return rc, rf, ru
+
+			review_url = build_review_url(url, hcno)
+			if resilient:
+				rc, rf = fetch_url_content_resilient(review_url, timeout=timeout)
+			else:
+				rc = fetch_url_content(review_url, timeout=timeout)
+				rf = review_url
+			review_cache[hcno] = (rc, rf)
+			return rc, rf, review_url
+
+		if extract_caibiao:
+			has_module, best_caibiao_text = extract_caibiao_info(content)
+			predicted_has_caibiao = has_module or bool(best_caibiao_text)
+			caibiao_from_review = False
+
+			if not predicted_has_caibiao:
+				fallback_hcnos = extract_hcnos_for_review(url, content)
+				for hcno in fallback_hcnos:
+					try:
+						rc, _, review_url = fetch_review_by_hcno(hcno, resilient=True)
+						r_has_module, r_text = extract_caibiao_info(rc)
+						if r_has_module or r_text:
+							predicted_has_caibiao = True
+							has_module = has_module or r_has_module
+							if r_text:
+								best_caibiao_text = r_text
+							caibiao_from_review = True
+							if fetch_review:
+								review_target = review_dir / build_review_filename(row, hcno)
+								review_target.write_text(rc, encoding="utf-8")
+								review_saved_hcnos.add(hcno)
+							break
+					except Exception:
+						continue
+
+			result["predicted_has_caibiao"] = predicted_has_caibiao
+			result["has_module"] = has_module
+			result["caibiao_text"] = best_caibiao_text
+			result["caibiao_from_review"] = caibiao_from_review
+
+		if fetch_review:
+			review_success = 0
+			review_failed = 0
+			review_fail_msgs: list[str] = []
+			for hcno in hcnos:
+				if hcno in review_saved_hcnos:
+					review_success += 1
+					continue
+				review_url = build_review_url(url, hcno)
+				review_target = review_dir / build_review_filename(row, hcno)
+				try:
+					if hcno in review_cache:
+						rc, _ = review_cache[hcno]
+					else:
+						rc = fetch_url_content(review_url, timeout=timeout)
+					review_target.write_text(rc, encoding="utf-8")
+					review_success += 1
+				except Exception as review_exc:
+					review_failed += 1
+					review_fail_msgs.append(f"row={row} url={review_url} error={review_exc}")
+
+			result["review_success"] = review_success
+			result["review_failed"] = review_failed
+			result["review_fail_msgs"] = review_fail_msgs
+
+	except Exception as exc:
+		result["error"] = str(exc)
+
+	return result
+
+
 def run(
 	excel_path: Path,
 	output_dir: Path,
 	sheet_name: str | None,
 	timeout: int,
+	workers: int,
 	max_rows: int | None,
 	fetch_review: bool,
 	extract_caibiao: bool,
@@ -344,7 +478,7 @@ def run(
 	n_hint_col_idx: int | None = None
 	n_hint_validation_col_idx: int | None = None
 	if extract_caibiao:
-		caibiao_col_idx = resolve_caibiao_column_index(ws, caibiao_column)
+		caibiao_col_idx = resolve_output_column_index(ws, caibiao_column, caibiao_header)
 		if caibiao_header and not ws.cell(row=1, column=caibiao_col_idx).value:
 			ws.cell(row=1, column=caibiao_col_idx, value=caibiao_header)
 
@@ -352,6 +486,16 @@ def run(
 		n_hint_col_idx = resolve_caibiao_column_index(ws, n_hint_column)
 		if n_hint_validation_column.upper() != "NONE":
 			n_hint_validation_col_idx = resolve_caibiao_column_index(ws, n_hint_validation_column)
+			if caibiao_col_idx is not None and n_hint_validation_col_idx == caibiao_col_idx:
+				from openpyxl.utils import get_column_letter
+
+				old_col = get_column_letter(n_hint_validation_col_idx)
+				n_hint_validation_col_idx = ws.max_column + 1
+				new_col = get_column_letter(n_hint_validation_col_idx)
+				print(
+					f"[WARN] Validation column '{old_col}' conflicts with caibiao output column. "
+					f"Auto-switched validation output to '{new_col}'."
+				)
 			if n_hint_validation_header and not ws.cell(row=1, column=n_hint_validation_col_idx).value:
 				ws.cell(row=1, column=n_hint_validation_col_idx, value=n_hint_validation_header)
 
@@ -374,104 +518,121 @@ def run(
 	n_hint_positive_but_not_predicted = 0
 	n_hint_negative_but_predicted = 0
 
-	for row in range(1, ws.max_row + 1):
-		if max_rows is not None and processed >= max_rows:
-			break
+	if workers < 1:
+		raise ValueError("workers must be >= 1")
 
+	row_jobs: list[tuple[int, str]] = []
+	for row in range(1, ws.max_row + 1):
+		if max_rows is not None and len(row_jobs) >= max_rows:
+			break
 		raw = ws[f"O{row}"].value
 		url = normalize_url(raw)
 		if not url:
 			continue
+		row_jobs.append((row, url))
 
-		processed += 1
-		filename = build_filename(url, row)
-		target = output_dir / filename
+	processed = len(row_jobs)
+	results_by_row: dict[int, dict[str, object]] = {}
 
-		try:
-			content, final_url = fetch_url_content_resilient(url, timeout=timeout)
-			target.write_text(content, encoding="utf-8")
+	with ThreadPoolExecutor(max_workers=workers) as executor:
+		future_to_row = {
+			executor.submit(
+				process_row_task,
+				row,
+				url,
+				output_dir,
+				review_dir,
+				timeout,
+				fetch_review,
+				extract_caibiao,
+			): row
+			for row, url in row_jobs
+		}
+
+		for future in as_completed(future_to_row):
+			row = future_to_row[future]
+			try:
+				results_by_row[row] = future.result()
+			except Exception as exc:
+				results_by_row[row] = {
+					"row": row,
+					"url": "",
+					"ok": False,
+					"error": str(exc),
+					"predicted_has_caibiao": False,
+					"has_module": False,
+					"caibiao_text": "",
+					"caibiao_from_review": False,
+					"review_found": 0,
+					"review_success": 0,
+					"review_failed": 0,
+					"review_fail_msgs": [],
+				}
+
+	for row, url in row_jobs:
+		res = results_by_row[row]
+		ok = bool(res.get("ok", False))
+		predicted_has_caibiao = bool(res.get("predicted_has_caibiao", False))
+
+		if ok:
 			success += 1
-			print(f"[OK] row={row} saved={target.name} url={final_url}")
-
-			predicted_has_caibiao = False
-			if extract_caibiao and caibiao_col_idx is not None:
-				has_module, caibiao_text = extract_caibiao_info(content)
-				predicted_has_caibiao = has_module or bool(caibiao_text)
-				best_caibiao_text = caibiao_text
-
-				# Fallback to review -> gbDetailed content when newGbInfo page has no direct hit.
-				if not predicted_has_caibiao:
-					hcnos = extract_hcnos_for_review(url, content)
-					for hcno in hcnos:
-						review_url = build_review_url(url, hcno)
-						try:
-							review_content, _ = fetch_url_content_resilient(review_url, timeout=timeout)
-							r_has_module, r_text = extract_caibiao_info(review_content)
-							if r_has_module or r_text:
-								predicted_has_caibiao = True
-								has_module = r_has_module
-								if r_text:
-									best_caibiao_text = r_text
-								caibiao_from_review_found += 1
-								if fetch_review:
-									review_target = review_dir / build_review_filename(row, hcno)
-									review_target.write_text(review_content, encoding="utf-8")
-								break
-						except Exception:
-							continue
-
-				if has_module:
-					caibiao_module_found += 1
-				if best_caibiao_text:
-					caibiao_text_found += 1
-					ws.cell(row=row, column=caibiao_col_idx, value=best_caibiao_text)
-				elif has_module:
-					ws.cell(row=row, column=caibiao_col_idx, value="存在采标情况模块")
-				else:
-					ws.cell(row=row, column=caibiao_col_idx, value="")
-
-			if enable_n_hint_validation and n_hint_col_idx is not None:
-				n_hint_value = ws.cell(row=row, column=n_hint_col_idx).value
-				expected_by_hint = n_column_hint_has_caibiao(n_hint_value)
-				if expected_by_hint:
-					n_hint_positive += 1
-					if predicted_has_caibiao:
-						n_hint_positive_and_predicted += 1
-					else:
-						n_hint_positive_but_not_predicted += 1
-				elif predicted_has_caibiao:
-					n_hint_negative_but_predicted += 1
-
-				if n_hint_validation_col_idx is not None:
-					if expected_by_hint and predicted_has_caibiao:
-						status = "N列命中且已提取"
-					elif expected_by_hint and not predicted_has_caibiao:
-						status = "N列疑似采标但未提取"
-					elif (not expected_by_hint) and predicted_has_caibiao:
-						status = "N列未标采但提取为采标"
-					else:
-						status = "N列未标采且未提取"
-					ws.cell(row=row, column=n_hint_validation_col_idx, value=status)
-
-			if fetch_review:
-				hcnos = extract_feedback_ids(content)
-				review_found += len(hcnos)
-				for hcno in hcnos:
-					review_url = build_review_url(url, hcno)
-					review_target = review_dir / build_review_filename(row, hcno)
-					try:
-						review_content = fetch_url_content(review_url, timeout=timeout)
-						review_target.write_text(review_content, encoding="utf-8")
-						review_success += 1
-						print(f"[OK][REVIEW] row={row} saved={review_target.name} url={review_url}")
-					except Exception as review_exc:
-						review_failed += 1
-						print(f"[FAIL][REVIEW] row={row} url={review_url} error={review_exc}")
-		except Exception as exc:
+			saved_name = str(res.get("saved_name", ""))
+			final_url = str(res.get("final_url", url))
+			print(f"[OK] row={row} saved={saved_name} url={final_url}")
+		else:
 			failed += 1
-			print(f"[FAIL] row={row} url={url} error={exc}")
-			if extract_caibiao and caibiao_col_idx is not None:
-				ws.cell(row=row, column=caibiao_col_idx, value=f"抓取失败: {exc}")
+			err = str(res.get("error", "unknown error"))
+			print(f"[FAIL] row={row} url={url} error={err}")
+
+		if fetch_review:
+			review_found += int(res.get("review_found", 0))
+			review_success += int(res.get("review_success", 0))
+			review_failed += int(res.get("review_failed", 0))
+			for msg in res.get("review_fail_msgs", []):
+				print(f"[FAIL][REVIEW] {msg}")
+
+		if extract_caibiao and caibiao_col_idx is not None:
+			has_module = bool(res.get("has_module", False))
+			caibiao_text = str(res.get("caibiao_text", ""))
+			if bool(res.get("caibiao_from_review", False)):
+				caibiao_from_review_found += 1
+
+			if has_module:
+				caibiao_module_found += 1
+			if caibiao_text:
+				caibiao_text_found += 1
+				ws.cell(row=row, column=caibiao_col_idx, value=caibiao_text)
+			elif has_module:
+				ws.cell(row=row, column=caibiao_col_idx, value="存在采标情况模块")
+			elif not ok:
+				ws.cell(row=row, column=caibiao_col_idx, value=f"抓取失败: {res.get('error', 'unknown error')}")
+			else:
+				ws.cell(row=row, column=caibiao_col_idx, value="")
+
+		if enable_n_hint_validation and n_hint_col_idx is not None:
+			n_hint_value = ws.cell(row=row, column=n_hint_col_idx).value
+			expected_by_hint = n_column_hint_has_caibiao(n_hint_value)
+			if expected_by_hint:
+				n_hint_positive += 1
+				if predicted_has_caibiao:
+					n_hint_positive_and_predicted += 1
+				else:
+					n_hint_positive_but_not_predicted += 1
+			elif predicted_has_caibiao:
+				n_hint_negative_but_predicted += 1
+
+			if n_hint_validation_col_idx is not None:
+				if not ok:
+					status = "抓取失败"
+				elif expected_by_hint and predicted_has_caibiao:
+					status = "N列命中且已提取"
+				elif expected_by_hint and not predicted_has_caibiao:
+					status = "N列疑似采标但未提取"
+				elif (not expected_by_hint) and predicted_has_caibiao:
+					status = "N列未标采但提取为采标"
+				else:
+					status = "N列未标采且未提取"
+				ws.cell(row=row, column=n_hint_validation_col_idx, value=status)
 
 	if extract_caibiao:
 		out_excel = excel_output or excel_path
@@ -512,6 +673,7 @@ def main() -> int:
 	parser.add_argument("--excel", help="Excel file path (default: first .xlsx in current folder)")
 	parser.add_argument("--sheet", help="Sheet name (default: active sheet)")
 	parser.add_argument("--timeout", type=int, default=15, help="Request timeout in seconds")
+	parser.add_argument("--workers", type=int, default=10, help="Concurrent worker count (default: 10)")
 	parser.add_argument("--max", type=int, default=None, help="Only process first N non-empty URLs")
 	parser.add_argument(
 		"--no-review",
@@ -573,6 +735,7 @@ def main() -> int:
 			output_dir=output_dir,
 			sheet_name=args.sheet,
 			timeout=args.timeout,
+			workers=args.workers,
 			max_rows=args.max,
 			fetch_review=not args.no_review,
 			extract_caibiao=not args.no_caibiao,
