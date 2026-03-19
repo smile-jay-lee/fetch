@@ -1,0 +1,564 @@
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>国家标准|GB 18245-2024</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="origin">
+<link href="../css/qbcx.css" rel="stylesheet" type="text/css" />
+<link href="/bzgk/css/bootstrap.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="/bzgk/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src='/bzgk/js/bootstrap.js'></script>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<style type="text/css">
+.mtr{height: 25px;}
+body{background-color: #F5F5F5;}
+.title{font-weight:bold;}
+.title,.content{padding:10px 0;border-top:1px #ddd solid;}  
+.smgg li{padding:0 22px;margin:15px 0;line-height:25px;}
+.statementUl li{background:url('../images/point.png') no-repeat 8px 6px;letter-spacing:1px;}
+.mk1 .label{color:white;font-size:12px;vertical-align:middle;padding:4px 6px;cursor:pointer;}
+</style>
+<script type="text/javascript">
+const supported = (function() {
+    try {
+        if (typeof WebAssembly === "object"
+            && typeof WebAssembly.instantiate === "function") {
+            const module = new WebAssembly.Module(Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00));
+            if (module instanceof WebAssembly.Module)
+                return new WebAssembly.Instance(module) instanceof WebAssembly.Instance;
+        }
+    } catch (e) {
+    }
+    return false;
+})();
+
+String.prototype.trim=function(){
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+ }
+$(document).ready(function(){
+	$('.xz_btn').click(function(){
+		var el = $(this);
+		showGb(el.attr('data-value'),'download');
+	});
+	$('.ck_btn').click(function(){
+		var el = $(this);
+		//if(supported) {
+			showGb(el.attr('data-value'),'online');
+		//} else {
+			//$('#myModal').modal('show');
+		//}
+	});
+	$('.fo').click(function() {
+		var el = $(this);
+		showGb(el.attr('data-value'));
+	});
+	$('.fk_btn').click(function(){
+		var el = $(this);
+		window.open('/bzgk/gb/review?hcno='+el.attr('data-value'));
+	});
+	/* $('.content').each(function(){ 
+		if($(this).html().trim()==''){ 
+			$(this).hide(); 
+			$(this).prev().hide()
+			
+		}
+	}); */
+});
+function showGb(gbCode,type){
+	var url = "http://c.gb688.cn/bzgk/gb/showGb?type="+type+"&hcno=" + gbCode;
+	window.open(url);
+}
+</script>
+</head>
+<body>
+	
+
+
+<style>
+	@media (max-width: 568px) {
+	  #xsMainLogo{width:90%;z-index:1000;margin:0 auto;margin-top:15px;display:block}
+	  #xsSubLogo{float:right;z-index:1000;margin:5px 5%;}
+	  #xsQwLogo{float:left;width:50%;z-index:1000;margin:7px 5%;} 
+	}
+	@media (min-width: 568px){
+	  #xsMainLogo{float:left;width:90%;z-index:1000;margin-top:15px;margin-left:6%;}
+	  #xsSubLogo{width:33%;z-index:1000;margin-top:40px;margin-right:1%;}
+	  #xsQwLogo{float:right;width:90%;z-index:1000;margin:15px 5%;margin-left:6%;}
+	  .xsDiv{width:65%}
+	} 
+	.popover .popover-title{text-align:center;} 
+	#sacLogo{text-decoration:none;position:absolute;font-size:12px;z-index:1000;top:10px;left:20px;color:#E4E4E4;display:inline-block;}
+	#sacLogo:hover{color:white;text-decoration:none;}
+	#sacLogo:visited{ text-decoration:none; }
+	
+    .nav-menu {
+        background-color: #005da8;
+        overflow: hidden;
+    }
+	
+    .nav-menu ul {
+        margin-bottom: 0 !important;
+        padding-left: 0;
+    }
+
+    .navbar-toggle {
+        position: absolute !important;
+        right: 6px;
+        cursor: pointer;
+    }
+
+    .navbar-toggle:hover {
+        background-color: #418ede;
+    }
+
+	.navbar-toggle .icon-bar {
+	    background-color: white;
+	}
+	
+    .nav-menu ul li {
+        cursor: pointer;
+        list-style: none;
+        min-width: 96px;
+        text-align: center;
+        float: left;
+        height: 43px;
+        line-height: 43px;
+        color: #fff;
+        margin-right: 7px;
+        font-size: 16px;
+        padding: 0 15px;
+    }
+
+    .nav-menu ul li:hover {
+        background-color: #338eff;
+    }
+
+    .nav-menu ul li a {
+        color: #fff;
+    }
+
+    .nav-menu ul li a:hover, .nav-menu li a:focus, .nav-menu li a:link {
+        text-decoration: none;
+    }
+
+    .nav-menu .nav_in {
+        background-color: #0f89eb;
+    }
+
+	.nav-menu ul li:hover {
+	    background-color: #338eff;
+	}
+    @media (max-width: 1200px) {
+ 		min-width: 84px;
+    }
+
+    @media (max-width: 992px) {
+        .nav-menu ul li {
+            min-width: 68px;
+            margin-right: 4px;
+            font-size: 14px;
+        }
+
+        #login-area {
+            top: 3px !important;
+            right: 3px !important;
+        }
+    }
+
+    @media (max-width: 368px) {
+        .navbar-brand small {
+            display: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-body {
+            padding: 0;
+        }
+
+        .nav-menu-show {
+            display: block !important;
+            height: 200px !important;
+        }
+
+        .nav-menu {
+            height: 0;
+            background-color: #3f75b7;
+            transition: height 500ms;
+            -moz-transition: height 500ms; /* Firefox 4 */
+            -webkit-transition: height 500ms; /* Safari and Chrome */
+            -o-transition: height 500ms; /* Opera */
+        }
+
+        .nav-menu .nav_in {
+            background-color: #338eff;
+        }
+
+        .nav-menu ul li {
+            display: block;
+            width: 50%;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            margin-right: 0;
+            border-top: 1px solid #ddd;
+            font-family: arial, tahoma, 'Microsoft Yahei', '\5b8b\4f53', sans-serif;
+        }
+
+        .nav-menu ul li:nth-child(-1n+4) {
+            border-top: 0;
+        }
+
+        .nav-menu ul li a {
+            color: white;
+        }
+
+        .header-carousel {
+            border: 0;
+        }
+
+        #top-bg {
+            background: url(/bzgk//images/logoimg.jpg) right -110px center no-repeat #187ed0 !important;
+        }
+
+       
+
+    }
+    
+</style>
+<script type="text/javascript" src="/bzgk/js/uni-webview-js@0.0.3/index.js"></script>
+<script>
+var isAppPlus = false;
+$(function(){
+	$('.navbar-toggle').click(function () {
+        $('.nav-menu').toggleClass("nav-menu-show");
+    });
+	$('.nav-menu li').click(function () {
+		var target = $(this).find("a").attr('target');
+		var href = $(this).find("a").attr('href')
+		if (target == null || target == '') {
+			window.location.href = href;
+		} else {
+			window.open(href);
+		}
+		return false;
+	});
+	uni.getEnv(function(res){
+    		console.log('当前环境：' + JSON.stringify(res));
+    		var userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36';
+    		if(res.plus||(res.h5&&userAgent.indexOf("HBuilderX")>-1)){
+    			isAppPlus = true;
+    			$(document).on("click", "a", function (event) {
+    				var href = $(this).attr('href');
+    				if(href!=null&&href!=''){
+    					uni.navigateTo({
+    						url: '/pages/outter/outter?title=国标通-全文阅读&src='+href
+    					});
+    					event.stopPropagation();
+    					return false;
+    				}
+    			});
+    		}
+    	});
+	$('#mobileEwm').popover({html:true});
+})
+</script>
+
+
+<div class="top_nav">
+<!-- <div style="background-color:rgb(50 90 158);"> 
+		<div class="container"> 
+			<div class="row">  
+				<div class="col-sm-12"> 
+					<div style="color:#ff9c3d;padding:5px 0">因机房设备维修，2022年10月28日17点到10月29日24点，系统暂时停止访问服务，望请知悉，带来不便，敬请谅解。</div>  
+				</div>
+			</div>
+		</div>
+	</div>-->
+<div style="width:100%;background-image:url(../images/bannerbg.jpg);">
+	<div class="container">
+		<div class="row hidden-xs hidden-sm" style="position:relative;height:120px;"> 
+			<img src="../images/main-logo.png" style="position:absolute;z-index:1000;top:40px;left:30px;"/>  
+			<img src="../images/sub-logo.png" width="304" height="53" style="position:absolute;z-index:1000;top:45px;right:40px;"/> 
+			<img src="../images/logo4.jpg" width="802" height="150" style="position:absolute;z-index:999;top:0;right:0;"/> 
+		</div>
+		<div class="row visible-xs visible-sm" style="position:relative;text-align:center;background-image:url('../images/logo4.jpg')">
+			<div class="xsDiv">
+			<img id="xsMainLogo" src="../images/main-logo.png" style=""/>
+			<img id="xsQwLogo" src="../images/qwfb.png" style=""/> 
+			</div>
+			<img id="xsSubLogo" src="../images/sub-logo.png" width="30%" style=""/> 
+		</div>
+	</div>
+</div>
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="background:#115883;border:0;margin-bottom:0;padding">  
+	<div class="container">
+		<div class="navbar-header" >
+	      <button type="button" class="navbar-toggle collapsed" style="margin:0;margin-top:-2px;padding:5px;" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a style="font-size:15px;" class="navbar-brand "  href="/bzgk/gb/index" >首&nbsp;页</a>
+	    </div>
+	
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        
+	        <li class=""><a href="/bzgk/gb/std_list_type?p.p1=1&p.p90=circulation_date&p.p91=desc">强制性国家标准</a></li>
+	        <li class=""><a href="/bzgk/gb/std_list_type?p.p1=2&p.p90=circulation_date&p.p91=desc">推荐性国家标准</a></li>
+	        <li class=""><a href="/bzgk/gb/std_list_type?p.p1=3&p.p90=circulation_date&p.p91=desc">指导性技术文件</a></li>
+					
+	        
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	      	
+	      	
+	      	
+	      	
+	      	<li class=""><a href="/bzgk/gb/help">帮助</a></li>
+	      	<li class=""><a href="/bzgk/gb/contact">联系我们</a></li>
+	      	
+	      </ul>
+	      <!-- <form class="navbar-form navbar-right" role="search" onsubmit="return false;">
+	         <div class="input-group input-group-sm" style="width:300px;margin:0 auto;line-height:normal;margin-top:4px;">
+										<input placeholder="请输入关键字" onkeydown="if(event.keyCode==13) search('',$(this).val());" type="text" class="form-control" aria-label="...">
+										<span class="input-group-btn">
+											<button id="searchBtn" class="btn btn-warning" type="button" >
+												<span class="glyphicon glyphicon-search"></span>
+											</button>
+										</span>
+									</div>
+	      </form> -->
+	    </div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+
+</div>
+	<div class="repbg1" style="min-height:initial;">
+	<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+		<div class="bor2">
+		
+		<table width="100%" class="mk1" border="0" cellspacing="0"
+			cellpadding="0">
+			<tr>
+				<td width="560" align="left"><h1>标准号：GB 18245-2024 </h1></td>
+			</tr>
+		</table>
+		<table width="100%" class="tdlist" border="0" cellspacing="0" cellpadding="0">
+  			<tr>
+    			<td>中文标准名称：<b>烟草加工系统粉尘防爆安全规范</b></td>
+    			
+    			<td width="65" rowspan="2" align="center"><!-- <img src="../images/pdf.jpg" width="34" height="33" /> --><br/>
+    				
+    				</td>
+    			
+  			</tr>
+ 			<tr>
+    			<td>英文标准名称：Safety specification  for dust explosion prevention and protection in tobacco processing system</td>
+    		</tr>
+    		<tr>
+				<td align="left">标准状态：
+				<span style="font-weight:bold;" class="text-success" style="margin-right: 10px;">
+				
+					 
+				
+				现行
+	 			
+				
+				</span>
+				</td>
+			</tr>
+    		<tr>
+    			<td style="padding-top:20px;">
+					 
+					 <button style="margin-right:20px" data-value="006FC9CF96BA22207FF2E3EA0775C91C" class="btn ck_btn btn-sm btn-primary">在线预览</button>
+					  
+					  
+					 <button style="margin-right:20px" data-value="006FC9CF96BA22207FF2E3EA0775C91C" class="btn xz_btn btn-sm btn-warning app-hide">下载标准</button>
+					  
+					  
+						<button style="margin-right:20px" data-value="006FC9CF96BA22207FF2E3EA0775C91C" class="btn fk_btn btn-sm btn-success app-hide">实施信息反馈</button>
+					   
+					<span class="text-danger" >
+					 
+					</span>
+    			</td>
+    		</tr>
+      </table>
+		
+		<div class="line"></div>
+		<div clsss="row detail">
+			<div class="col-xs-12 col-md-2 title">
+			中国标准分类号（CCS）
+			</div>
+			<div class="col-xs-12 col-md-4 content">
+			C67
+			</div>
+			<div class="col-xs-12 col-md-2 title">
+			国际标准分类号（ICS）
+			</div>
+			<div class="col-xs-12 col-md-4 content">
+			13.230
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		<div clsss="row">
+			<div class="col-xs-12 col-md-2 title">
+			发布日期
+			</div>
+			<div class="col-xs-12 col-md-4 content">
+			2024-09-29
+			</div>
+			
+				<div class="col-xs-12 col-md-2 title">
+				实施日期
+				</div>
+				 <div class="col-xs-12 col-md-4 content">
+				2025-04-01
+				</div>
+			 
+			<div style="clear:both;"></div>
+		</div>
+		<div clsss="row">
+			<div class="col-xs-12 col-md-2 title">
+			主管部门
+			</div>
+			<div class="col-xs-12 col-md-4 content">
+			应急管理部
+			</div>
+			<div class="col-xs-12 col-md-2 title">
+			归口部门
+			</div>
+			<div class="col-xs-12 col-md-4 content">
+			应急管理部
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div clsss="row">
+			<div class="col-xs-12 col-md-2 title">
+			发布单位
+			</div>
+			<div class="col-xs-12 col-md-10 content">
+			国家市场监督管理总局、国家标准化管理委员会
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<div clsss="row">
+			<div class="col-xs-12 col-md-2 title">
+			备注
+			</div>
+			<div class="col-xs-12 col-md-10 content">
+			
+			</div>
+			
+		</div>
+		<div style="clear:both;"></div>
+		
+		
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	<div class="modal bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">在线预览提示</h4>
+				</div>
+				<div class="modal-body"> 
+					当前浏览器暂不支持标准全文在线预览服务，请使用现代浏览器（Chrome、Firefox、Opera、Microsoft Edge、360安全浏览器、搜狗浏览器、猎豹浏览器、傲游浏览器等）重新打开当前页面继续进行标准全文预览。
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">知道了</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+<style>
+@media (max-width: 768px) {
+	.footer-body li {
+	    color: white;
+	    font-size: 12px;
+	}
+}
+</style>
+
+	
+	<div class="foot">
+	<table style="margin: 0 auto;">
+	<tr>
+	<td>
+		版权所有：国家市场监督管理总局 国家标准化管理委员会 <br class="hidden-lg hidden-md"/><a href="https://beian.miit.gov.cn/" target="_blank">京ICP备18022388号-1</a><br/> 网站技术支持：国家市场监督管理总局国家标准技术审评中心 <br class="hidden-lg hidden-md"/>
+		支持电话：010-82261056<br class="hidden-lg hidden-md"/><br class="hidden-lg hidden-md"/>
+	</td>
+	<td>
+	<a style="margin-left:15px;" href="javascript:return void(0);" onclick="Link('bm31370001')"><img src="/bzgk//images/jiucuo.png" style="width: 120px;"/></a>
+	<a style="margin-left:15px;" target="_blank" href="https://bszs.conac.cn/sitename?method=show&id=A1B86006AA736CD2E05310291AAC4CC7"><img src="/bzgk//images/dzjg.png" /></a>
+	</td>
+	</tr>
+	</table>
+	</div>
+	
+	<script>
+		var  _hmt  =  _hmt  ||  [];
+		
+		function open_new_window(full_link){
+			window.open('javascript:window.name;', '<script>location.replace("'+full_link+'")<\/script>');
+		}
+	
+		(function()  {
+		    var  hm  =  document.createElement("script");
+		    hm.src  =  "https://hm.baidu.com/hm.js?50758913e6f0dfc9deacbfebce3637e4";
+		    var  s  =  document.getElementsByTagName("script")[0];  
+		    s.parentNode.insertBefore(hm,  s);
+		    
+		    
+		    $('.outer-link').click(function(){
+		    	open_new_window($(this).attr('href'));
+		    	return false;
+		    });
+		})();
+        //点击图标
+        function Link(site_code) {
+            //获取该站点需要纠错页面的url地址
+            var url = getCurrUrl();
+            //跳转至纠错系统填写页面 
+            window.open("https://zfwzgl.www.gov.cn/exposure/jiucuo.html?site_code=" + site_code + "&url=" + encodeURIComponent(url));
+        }
+        //获取该站点需要纠错页面的url地址
+        function getCurrUrl() {
+            var url = "";
+            if (parent !== window) {
+                try {
+                    url = window.top.location.href;
+                } catch (e) {
+                    url = window.top.document.referrer;
+                }
+            }
+            if (url.length == 0)
+                url = document.location.href;
+            return url;
+        }
+    </script>
+</div>
+</body>
+</html>

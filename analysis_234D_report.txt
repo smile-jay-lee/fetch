@@ -1,0 +1,15 @@
+request_url: https://std.samr.gov.cn/gb/search/gbDetailed?id=234D7936AB54E194E06397BE0A0AA0A9&review=true
+final_url: https://std.samr.gov.cn/gb/search/gbDetailed?id=234D7936AB54E194E06397BE0A0AA0A9&review=true
+html_length: 77700
+title_zh: 
+title_en: 
+marks:
+  - contains_采标情况: True
+  - contains_IEC: True
+  - contains_等同采用: True
+  - contains_login_word: True
+  - contains_review_autoclick_js: True
+section_titles:
+basic_info_pairs(sample up to 20):
+caibiao_candidates:
+  - (none)
